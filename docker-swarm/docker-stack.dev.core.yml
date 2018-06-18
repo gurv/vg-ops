@@ -1,0 +1,79 @@
+version: '3.4'
+
+services:
+  config:
+    image: vg/config:latest
+    ports:
+      - "8888:8888"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
+  auth:
+    image: vg/auth:latest
+    ports:
+      - "5000:8080"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
+  account:
+    image: vg/account:latest
+    ports:
+      - "8081:8081"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
+  gateway:
+    image: vg/gateway:latest
+    ports:
+      - "10000:10000"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
+  dataflow:
+    image: vg/dataflow:latest
+    ports:
+      - "9393:9393"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
+  skipper:
+    image: vg/skipper:latest
+    ports:
+      - "7577:7577"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
+  swagger:
+    image: vg/swagger:latest
+    ports:
+      - "8084:8084"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager

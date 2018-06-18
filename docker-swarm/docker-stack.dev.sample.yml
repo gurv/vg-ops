@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  sample_operation:
+    image: vg/sample-operation:latest
+    ports:
+      - "8101:8101"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
+  sample_account:
+    image: vg/sample-account:latest
+    ports:
+      - "8102:8102"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager

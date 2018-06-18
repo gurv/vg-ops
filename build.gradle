@@ -1,0 +1,58 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2" }
+    }
+    dependencies {
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.21")
+        classpath("com.bmuschko:gradle-docker-plugin:3.2.4")
+    }
+}
+
+configure(rootProject) {
+    ext {
+        dockerVersion = '18.03.1-ce'
+
+        // готовые загружаемые (например, из Docker Hub) docker-образы
+        dockerProjects = [
+                project(':docker-cli'),
+                project(':docker-registry'),
+        ]
+    }
+}
+
+configure(subprojects) {
+    apply plugin: 'base'
+
+    ext {
+        buildNoString = project.hasProperty('buildNo') ? "${buildNo}" : "0.1.0"
+    }
+
+    group = 'ru.gurv.vg'
+    version = buildNoString
+}
+
+configure(subprojects.findAll {it.subprojects.size() == 0 }) {
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    ext {
+        dockerImageName = "gurv/${rootProject.name}-${project.path.substring(1).replace(':', '-')}:latest"
+        dockerContainerName = "${rootProject.name}-${project.path.substring(1).replace(':', '-')}"
+        dockerImageBuildArgs = []
+    }
+
+    apply plugin: 'com.bmuschko.docker-remote-api'
+
+    docker {
+        url = 'tcp://192.168.1.33:2375'
+    }
+}
+
+configure(project.dockerProjects) {
+    apply plugin: 'base'
+}

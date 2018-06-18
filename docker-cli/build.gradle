@@ -1,0 +1,17 @@
+import com.bmuschko.gradle.docker.tasks.image.*
+
+task buildImage(type: DockerBuildImage) {
+    doFirst {
+        copy {
+            from 'src/main/docker'
+            into "$project.buildDir/docker"
+        }
+    }
+
+    dockerFile file('src/main/docker/Dockerfile')
+    inputDir = project.projectDir
+    buildArgs = [
+            'DOCKER_VERSION': rootProject.dockerVersion,
+    ]
+    tag = 'vg/docker-cli:latest'
+}

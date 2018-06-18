@@ -1,0 +1,3 @@
+= Docker Registry
+
+Сборка docker-образа https://docs.docker.com/registry/[Docker Registry]
