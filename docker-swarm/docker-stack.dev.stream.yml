@@ -3,31 +3,48 @@ version: '3.4'
 services:
   zookeeper:
     image: vg/zookeeper:latest
+    hostname: zookeeper
     ports:
       - 2181:2181 # clientPort
       - 2888:2888 # peerPort
       - 3888:3888 # leaderPort
       - 1233:1233 # JMX Exporter
     environment:
-      SERVER_JVMFLAGS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.rmi.port=9999 -javaagent:/usr/app/jmx_prometheus_javaagent.jar=1233:/usr/app/prometheus.yml
-      JMXPORT: 9999
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_SERVER_ID: 1
+      KAFKA_JMX_OPTS: '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.rmi.port=9999 -javaagent:/usr/app/jmx_prometheus_javaagent.jar=1233:/usr/app/prometheus.yml'
+      KAFKA_JMX_PORT: 9999
+    extra_hosts:
+      - "moby:127.0.0.1"
 
   kafka:
     image: vg/kafka:latest
+    hostname: kafka
     ports:
       - 9092 #TODO назначение
       - 1234:1234 # JMX Exporter
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.6 #TODO что должно быть?
-      KAFKA_ADVERTISED_PORT: "9092"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      #FIXME ошибка при запуске на удаленном docker-хосте:
-      #   /usr/bin/start-kafka.sh: line 107: KAFKA_JMX_OPTS=... bad substitution
-      # временно убрал
-#      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.rmi.port=9999 -javaagent:/opt/prometheus/jmx_prometheus_javaagent.jar=1234:/opt/prometheus/prometheus.yml
-      KAFKA_JMX_OPTS:
-      JMX_PORT: 9999
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:9092'
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_JMX_OPTS: '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.rmi.port=9999 -javaagent:/opt/prometheus/jmx_prometheus_javaagent.jar=1234:/opt/prometheus/prometheus.yml'
     depends_on:
       - zookeeper
+    extra_hosts:
+      - "moby:127.0.0.1"
+
+  kafka-schema-registry:
+    image: vg/kafka-schema-registry:latest
+    hostname: kafka_schema_registry
+    ports:
+      - '18081:18081'
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema_registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:18081
+    depends_on:
+      - zookeeper
+      - kafka
+    extra_hosts:
+      - "moby:127.0.0.1"
