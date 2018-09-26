@@ -1,0 +1,13 @@
+= Docker Swarm
+
+Запуск/останов/уборка
+----
+docker swarm init
+docker stack deploy -c docker-stack.dev.db.yml vg
+docker stack deploy -c docker-stack.dev.ops.yml vg
+docker stack deploy -c docker-stack.dev.stream.yml vg
+docker stack deploy -c docker-stack.dev.core.yml vg
+docker stack deploy -c docker-stack.dev.monitoring.yml vg
+docker stack rm vg
+docker volume prune --force
+----
