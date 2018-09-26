@@ -1,0 +1,10 @@
+import com.bmuschko.gradle.docker.tasks.image.*
+
+task buildImage(type: DockerBuildImage) {
+    dockerFile file("src/main/docker/Dockerfile")
+    inputDir = file("src/main/docker")
+    buildArgs = [
+            'PORTAINER_VERSION': rootProject.portainerVersion
+        ]
+    tag = 'vg/portainer:latest'
+}

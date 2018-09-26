@@ -1,0 +1,3 @@
+= Portainer
+
+Сборка docker-образа https://github.com/portainer/portainer[Portainer] (UI для Docker-а)

@@ -2,3 +2,4 @@ rootProject.name = 'vg-ops'
 
 include 'docker-cli'
 include 'docker-registry'
+include 'portainer'
