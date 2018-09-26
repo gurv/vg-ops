@@ -20,6 +20,7 @@ configure(rootProject) {
                 project(':docker-cli'),
                 project(':docker-registry'),
                 project(':portainer'),
+                project(':jenkins'),
         ]
     }
 }

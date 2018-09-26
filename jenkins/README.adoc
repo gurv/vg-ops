@@ -1,0 +1,8 @@
+= Jenkins
+
+Сборка docker-образа https://hub.docker.com/r/jenkins/jenkins/[Jenkins]
+
+Получение начального пароля администратора
+----
+docker exec /vg_jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+----

@@ -1,0 +1,4 @@
+ARG JENKINS_VERSION=2.142
+FROM jenkins/jenkins:${JENKINS_VERSION}-alpine
+
+EXPOSE 8080

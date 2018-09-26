@@ -1,0 +1,7 @@
+import com.bmuschko.gradle.docker.tasks.image.*
+
+task buildImage(type: DockerBuildImage) {
+    dockerFile file('src/main/docker/Dockerfile')
+    inputDir = project.projectDir
+    tag = 'vg/jenkins:latest'
+}
