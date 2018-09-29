@@ -2,6 +2,7 @@ version: '3.4'
 
 volumes:
     portainer: {}
+    nexus: {}
 
 services:
   portainer:
@@ -26,3 +27,10 @@ services:
     image: vg/jenkins:latest
     ports:
     - '8085:8080'
+
+  nexus:
+    image: vg/nexus:latest
+    volumes:
+      - nexus:/nexus-data
+    ports:
+    - '8086:8081'

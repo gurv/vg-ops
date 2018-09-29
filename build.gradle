@@ -21,6 +21,7 @@ configure(rootProject) {
                 project(':docker-registry'),
                 project(':portainer'),
                 project(':jenkins'),
+                project(':nexus'),
         ]
     }
 }
