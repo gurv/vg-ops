@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    tools {
+         gradle 'gradle-4.9'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/master']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[url: 'https://github.com/gurv/vg-project.git']]
+                    ])
+                sh "gradle build --stacktrace"
+                }
+        }
+        stage('Test') {
+            steps {
+                sh "gradle check --stacktrace"
+            }
+        }
+    }
+}
