@@ -1,6 +1,7 @@
 plugins {
     id 'com.bmuschko.docker-remote-api' version '3.4.4' apply false
     id 'com.gorylenko.gradle-git-properties' version '1.5.1' apply false
+    id "org.sonarqube" version "2.6.2" apply false
 }
 
 configure(rootProject) {
@@ -23,6 +24,7 @@ configure(rootProject) {
 configure(subprojects) {
     apply plugin: 'base'
     apply plugin: 'com.bmuschko.docker-remote-api'
+    apply plugin: 'org.sonarqube'
 
     ext {
         buildNoString = project.hasProperty('buildNo') ? "${buildNo}" : "0.1.0"
