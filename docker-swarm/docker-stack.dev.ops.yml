@@ -36,3 +36,9 @@ services:
       - nexus:/nexus-data
     ports:
     - '8086:8081'
+
+  sonarqube:
+    image: vg/sonarqube:latest
+    ports:
+      - '8087:9000' # HTTP
+      - '8187:9092' # H2

@@ -15,6 +15,7 @@ configure(rootProject) {
                 project(':portainer'),
                 project(':jenkins'),
                 project(':nexus'),
+                project(':sonarqube'),
         ]
     }
 }
