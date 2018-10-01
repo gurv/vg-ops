@@ -1,13 +1,6 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-        maven { url "https://plugins.gradle.org/m2" }
-    }
-    dependencies {
-        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.21")
-        classpath("com.bmuschko:gradle-docker-plugin:3.2.4")
-    }
+plugins {
+    id 'com.bmuschko.docker-remote-api' version '3.4.4' apply false
+    id 'com.gorylenko.gradle-git-properties' version '1.5.1' apply false
 }
 
 configure(rootProject) {
@@ -28,6 +21,7 @@ configure(rootProject) {
 
 configure(subprojects) {
     apply plugin: 'base'
+    apply plugin: 'com.bmuschko.docker-remote-api'
 
     ext {
         buildNoString = project.hasProperty('buildNo') ? "${buildNo}" : "0.1.0"
