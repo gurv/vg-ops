@@ -13,15 +13,17 @@ services:
     ports:
       - 9000:9000 # tcp
 
-  docker-cli:
-    image: vg/docker-cli:latest
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 23:22 # ssh
+#FIXME
+#  docker-cli:
+#    image: vg/docker-cli:latest
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    ports:
+#      - 23:22 # ssh
 
-  docker-registry:
-    image: vg/docker-registry:latest
+  #FIXME
+#  docker-registry:
+#    image: vg/docker-registry:latest
 
   jenkins:
     image: vg/jenkins:latest
