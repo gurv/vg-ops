@@ -1,13 +1,14 @@
 version: '3.4'
 
 services:
-  h2:
-    image: vg/h2:latest
-    volumes:
-    - type: bind
-      source: /opt/vg/h2-data
-      target: /opt/h2-data
-    ports:
-      - 8083:8083 # web
-      - 9093:9093 # tcp
-      - 1235:1235 # JMX Exporter
+#FIXME
+#  h2:
+#    image: vg/h2:latest
+#    volumes:
+#    - type: bind
+#      source: /opt/vg/h2-data
+#      target: /opt/h2-data
+#    ports:
+#      - 8083:8083 # web
+#      - 9093:9093 # tcp
+#      - 1235:1235 # JMX Exporter
