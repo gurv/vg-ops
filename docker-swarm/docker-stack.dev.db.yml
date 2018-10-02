@@ -1,13 +1,12 @@
 version: '3.4'
 
-volumes:
-    h2: {}
-
 services:
   h2:
     image: vg/h2:latest
     volumes:
-      - h2:/opt/h2-data
+    - type: bind
+      source: /opt/vg/h2-data
+      target: /opt/h2-data
     ports:
       - 8083:8083 # web
       - 9093:9093 # tcp
