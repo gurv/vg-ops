@@ -29,5 +29,10 @@ pipeline {
                 sh "gradle buildImage --stacktrace"
             }
         }
+        stage('Smoke Test') {
+            steps {
+                sh "docker stack deploy -c docker-swarm/docker-stack.dev.ops.yml vg"
+            }
+        }
     }
 }
