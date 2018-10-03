@@ -1,3 +1,11 @@
+pluginManagement {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2" }
+        maven { url 'http://repo.spring.io/plugins-release' }
+        mavenCentral()
+    }
+}
+
 rootProject.name = 'vg-ops'
 
 include 'docker-cli'
