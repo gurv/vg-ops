@@ -1,23 +1,13 @@
 version: '3.4'
 
-volumes:
-    portainer: {}
-    nexus: {}
-    sonarqube_db_data:
-    jenkins_home:
-    sonarqube_bundled_plugins:
-    sonarqube_conf:
-    sonarqube_data:
-    sonarqube_extensions:
-
 services:
   portainer:
     image: vg/portainer:latest
+    ports:
+      - 9000:9000 # tcp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer:/data
-    ports:
-      - 9000:9000 # tcp
 
 #FIXME
 #  docker-cli:
@@ -27,29 +17,31 @@ services:
 #    ports:
 #      - 23:22 # ssh
 
-  #FIXME
+#FIXME
 #  docker-registry:
 #    image: vg/docker-registry:latest
 
   jenkins:
     image: vg/jenkins:latest
+    ports:
+      - '8085:8080'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - jenkins_home:/var/jenkins_home
-    ports:
-    - '8085:8080'
 
   nexus:
     image: vg/nexus:latest
+    ports:
+      - '8086:8081'
     volumes:
       - nexus:/nexus-data
-    ports:
-    - '8086:8081'
 
   sonarqube:
     image: vg/sonarqube:latest
     ports:
-      - '8087:9000' # HTTP
+      - '8087:9000' # http
+    networks:
+      - sonarqube_net
     environment:
       - SONARQUBE_JDBC_USERNAME=sonar
       - SONARQUBE_JDBC_PASSWORD=sonar
@@ -59,19 +51,27 @@ services:
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_bundled_plugins:/opt/sonarqube/lib/bundled-plugins
-    networks:
-      - sonarqube_net
 
   sonarqube_db:
     image: vg/postgres:latest
     hostname: sonarqube_db
+    networks:
+      - sonarqube_net
     environment:
       - POSTGRES_USER=sonar
       - POSTGRES_PASSWORD=sonar
-    networks:
-      - sonarqube_net
     volumes:
       - sonarqube_db_data:/var/lib/postgresql/data
 
 networks:
   sonarqube_net:
+
+volumes:
+  portainer:
+  nexus:
+  sonarqube_db_data:
+  jenkins_home:
+  sonarqube_bundled_plugins:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
