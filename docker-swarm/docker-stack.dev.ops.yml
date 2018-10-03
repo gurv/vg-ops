@@ -4,6 +4,11 @@ volumes:
     portainer: {}
     nexus: {}
     sonarqube_db_data:
+    jenkins_home:
+    sonarqube_bundled_plugins:
+    sonarqube_conf:
+    sonarqube_data:
+    sonarqube_extensions:
 
 services:
   portainer:
@@ -30,6 +35,7 @@ services:
     image: vg/jenkins:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - jenkins_home:/var/jenkins_home
     ports:
     - '8085:8080'
 
@@ -48,6 +54,11 @@ services:
       - SONARQUBE_JDBC_USERNAME=sonar
       - SONARQUBE_JDBC_PASSWORD=sonar
       - SONARQUBE_JDBC_URL=jdbc:postgresql://sonarqube_db:5432/sonar
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_bundled_plugins:/opt/sonarqube/lib/bundled-plugins
     networks:
       - sonarqube_net
 
