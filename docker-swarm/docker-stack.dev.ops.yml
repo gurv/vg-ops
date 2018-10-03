@@ -23,8 +23,11 @@ services:
 
   jenkins:
     image: vg/jenkins:latest
+    hostname: jenkins
     ports:
       - '8085:8080'
+    networks:
+      - sonarqube_net
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - jenkins_home:/var/jenkins_home
@@ -38,6 +41,7 @@ services:
 
   sonarqube:
     image: vg/sonarqube:latest
+    hostname: sonarqube
     ports:
       - '8087:9000' # http
     networks:

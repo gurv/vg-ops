@@ -24,9 +24,19 @@ pipeline {
                 sh "gradle check --stacktrace"
             }
         }
+        stage('Sonar') {
+            steps {
+                sh "gradle sonarqube -Dsonar.host.url=http://sonarqube:9000"
+            }
+        }
         stage('Build image') {
             steps {
                 sh "gradle buildImage --stacktrace"
+            }
+        }
+        stage('Smoke test') {
+            steps {
+                sh "echo TODO"
             }
         }
     }
