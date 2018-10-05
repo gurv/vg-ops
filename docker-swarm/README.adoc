@@ -11,3 +11,16 @@ docker stack deploy -c docker-stack.dev.monitoring.yml vg
 docker stack rm vg
 docker volume prune --force
 ----
+
+== Памятка
+
+Консоль контейнера под root
+----
+docker container ls
+docker exec -u 0 -it mycontainer bash
+----
+
+Права контейнерам для работы с Docker-ом хоста
+----
+chmod g+rwx,o+rwx /run/docker.sock
+----
