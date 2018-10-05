@@ -14,12 +14,7 @@ import org.jenkinsci.plugins.workflow.flow.FlowDefinition
 Jenkins jenkins = Jenkins.instance
 
 // Gradle
-def isp = new InstallSourceProperty()
-def gradleInstaller = new hudson.plugins.gradle.GradleInstaller("4.9")
-isp.installers.add(gradleInstaller)
-def props = new DescribableList<ToolProperty<?>, ToolPropertyDescriptor>()
-props.add(isp)
-def gradleInstallation = new GradleInstallation("gradle-4.9", "", props)
+def gradleInstallation = new GradleInstallation("gradle-4.9", "", null)
 def gradleInstallationDescriptor = jenkins.getDescriptorByType(hudson.plugins.gradle.GradleInstallation.DescriptorImpl)
 gradleInstallationDescriptor.setInstallations(gradleInstallation)
 gradleInstallationDescriptor.save()

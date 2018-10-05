@@ -11,4 +11,27 @@ RUN /usr/local/bin/install-plugins.sh \
 
 COPY --chown=jenkins:jenkins src/main/groovy/init.groovy /var/jenkins_home/init.groovy.d/
 
+# Gradle
+ARG GRADLE_VERSION=4.9
+ARG GRADLE_HOME=/opt/gradle-$GRADLE_VERSION
+
+USER root
+
+RUN mkdir -p /opt && \
+    apk --update add --no-cache unzip && \
+    mkdir -p /tmp/download && \
+    # Gradle
+    curl -L -o /tmp/download/gradle-${GRADLE_VERSION}-bin.zip https://services.gradle.org/distributions/gradle-4.9-bin.zip && \
+    unzip /tmp/download/gradle-${GRADLE_VERSION}-bin.zip -d /opt/ && \
+    #
+    rm -rf /tmp/download && \
+    rm -rf /var/cache/apk/*
+
+# Gradle
+COPY src/main/gradle/init.gradle /opt/gradle-${GRADLE_VERSION}/init.d/
+ENV GRADLE_HOME=$GRADLE_HOME
+ENV PATH=$PATH:$GRADLE_HOME/bin
+
+USER jenkins
+
 EXPOSE 8080
