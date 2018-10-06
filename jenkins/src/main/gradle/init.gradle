@@ -1,7 +1,7 @@
-initscript {
+allprojects {
     repositories {
         maven {
-            url "http://nexus"
+            url "http://nexus:8081/repository/maven-snapshots/"
         }
     }
 }
