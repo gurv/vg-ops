@@ -8,6 +8,7 @@ RUN /usr/local/bin/install-plugins.sh \
     gradle:1.29 \
     workflow-aggregator:2.5 \
     cloudbees-folder:6.6 \
+    prometheus:1.2.2 \
     nodejs:1.2.6
 
 COPY --chown=jenkins:jenkins src/main/groovy/init.groovy /var/jenkins_home/init.groovy.d/
