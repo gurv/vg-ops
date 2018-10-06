@@ -10,6 +10,7 @@ import jenkins.model.Jenkins
 import org.jenkinsci.plugins.workflow.job.WorkflowJob
 import org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition
 import org.jenkinsci.plugins.workflow.flow.FlowDefinition
+import jenkins.plugins.nodejs.tools.NodeJSInstaller
 
 Jenkins jenkins = Jenkins.instance
 
@@ -18,6 +19,12 @@ def gradleInstallation = new GradleInstallation("gradle-4.9", "", null)
 def gradleInstallationDescriptor = jenkins.getDescriptorByType(hudson.plugins.gradle.GradleInstallation.DescriptorImpl)
 gradleInstallationDescriptor.setInstallations(gradleInstallation)
 gradleInstallationDescriptor.save()
+
+// Gradle
+def nodeJsInstallation = new NodeJSInstaller("nodejs-8.12.0", "", 0)
+def nodeJsInstallationDescriptor = jenkins.getDescriptorByType(jenkins.plugins.nodejs.tools.NodeJSInstallation.DescriptorImpl)
+nodeJsInstallationDescriptor.setInstallations(nodeJsInstallation)
+nodeJsInstallationDescriptor.save()
 
 // Folder
 String folderName = "vg"

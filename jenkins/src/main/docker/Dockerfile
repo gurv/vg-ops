@@ -14,6 +14,9 @@ COPY --chown=jenkins:jenkins src/main/groovy/init.groovy /var/jenkins_home/init.
 # Gradle
 ARG GRADLE_VERSION=4.9
 ARG GRADLE_HOME=/opt/gradle-$GRADLE_VERSION
+# NodeJs
+ARG NODE_VERSION=8.12.0
+ARG NODE_HOME=/opt/node-v${NODE_VERSION}-linux-x86
 
 USER root
 
@@ -23,6 +26,8 @@ RUN mkdir -p /opt && \
     # Gradle
     curl -L -o /tmp/download/gradle-${GRADLE_VERSION}-bin.zip https://services.gradle.org/distributions/gradle-4.9-bin.zip && \
     unzip /tmp/download/gradle-${GRADLE_VERSION}-bin.zip -d /opt/ && \
+    # NodeJs
+    apk add bash==${NODE_VERSION}-r0 && \
     #
     rm -rf /tmp/download && \
     rm -rf /var/cache/apk/*
