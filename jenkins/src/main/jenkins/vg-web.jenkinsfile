@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/master']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[url: 'https://github.com/gurv/vg-web.git']]
+                    ])
+                sh '''
+                    npm install
+                    npm install @angular/cli
+                    node_modules/.bin/ng build
+                '''
+                }
+        }
+        stage('Test') {
+            steps {
+                sh "echo TODO"
+            }
+        }
+        stage('Sonar') {
+            steps {
+                sh "echo TODO"
+            }
+        }
+        stage('Build image') {
+            steps {
+                sh "echo TODO"
+            }
+        }
+        stage('Smoke test') {
+            steps {
+                sh "echo TODO"
+            }
+        }
+        stage('Publish CI') {
+            steps {
+                sh "echo TODO"
+            }
+        }
+    }
+}

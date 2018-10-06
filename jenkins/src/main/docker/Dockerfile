@@ -7,7 +7,8 @@ RUN /usr/local/bin/install-plugins.sh \
     git:3.9.1 \
     gradle:1.29 \
     workflow-aggregator:2.5 \
-    cloudbees-folder:6.6
+    cloudbees-folder:6.6 \
+    nodejs:1.2.6
 
 COPY --chown=jenkins:jenkins src/main/groovy/init.groovy /var/jenkins_home/init.groovy.d/
 
@@ -15,8 +16,8 @@ COPY --chown=jenkins:jenkins src/main/groovy/init.groovy /var/jenkins_home/init.
 ARG GRADLE_VERSION=4.9
 ARG GRADLE_HOME=/opt/gradle-$GRADLE_VERSION
 # NodeJs
-ARG NODE_VERSION=8.12.0
-ARG NODE_HOME=/opt/node-v${NODE_VERSION}-linux-x86
+ARG NODEJS_VERSION=8.11.4
+ARG NODE_HOME=/opt/node-v${NODEJS_VERSION}-linux-x86
 
 USER root
 
@@ -27,7 +28,7 @@ RUN mkdir -p /opt && \
     curl -L -o /tmp/download/gradle-${GRADLE_VERSION}-bin.zip https://services.gradle.org/distributions/gradle-4.9-bin.zip && \
     unzip /tmp/download/gradle-${GRADLE_VERSION}-bin.zip -d /opt/ && \
     # NodeJs
-    apk add bash==${NODE_VERSION}-r0 && \
+    apk add nodejs-npm==${NODEJS_VERSION}-r0 && \
     #
     rm -rf /tmp/download && \
     rm -rf /var/cache/apk/*

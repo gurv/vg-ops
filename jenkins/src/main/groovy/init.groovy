@@ -2,15 +2,10 @@ import com.cloudbees.hudson.plugins.folder.*
 import hudson.plugins.git.GitSCM
 import hudson.plugins.git.UserRemoteConfig
 import hudson.plugins.gradle.GradleInstallation
-import hudson.tools.InstallSourceProperty
-import hudson.tools.ToolProperty
-import hudson.tools.ToolPropertyDescriptor
-import hudson.util.DescribableList
 import jenkins.model.Jenkins
 import org.jenkinsci.plugins.workflow.job.WorkflowJob
 import org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition
 import org.jenkinsci.plugins.workflow.flow.FlowDefinition
-import jenkins.plugins.nodejs.tools.NodeJSInstaller
 
 Jenkins jenkins = Jenkins.instance
 
@@ -20,8 +15,8 @@ def gradleInstallationDescriptor = jenkins.getDescriptorByType(hudson.plugins.gr
 gradleInstallationDescriptor.setInstallations(gradleInstallation)
 gradleInstallationDescriptor.save()
 
-// Gradle
-def nodeJsInstallation = new NodeJSInstaller("nodejs-8.12.0", "", 0)
+// NodeJs
+def nodeJsInstallation = new jenkins.plugins.nodejs.tools.NodeJSInstallation("nodejs-8.12.0", "", null)
 def nodeJsInstallationDescriptor = jenkins.getDescriptorByType(jenkins.plugins.nodejs.tools.NodeJSInstallation.DescriptorImpl)
 nodeJsInstallationDescriptor.setInstallations(nodeJsInstallation)
 nodeJsInstallationDescriptor.save()
@@ -43,6 +38,7 @@ GitSCM scm = new GitSCM([userRemoteConfig], null, false, null, null, null, [])
     'vg-core',
     'vg-examples',
     'vg-doc',
+    'vg-web',
 ].each { jobName ->
     FlowDefinition flowDefinition = (FlowDefinition) new CpsScmFlowDefinition(scm, "jenkins/src/main/jenkins/${jobName}.jenkinsfile")
     Object job = folder.getItem(jobName)
