@@ -1,3 +1,8 @@
 = Nexus
 
 Сборка docker-образа https://hub.docker.com/r/sonatype/nexus3/[Nexus]
+
+== TODO
+
+* т.к. еще не сделано автоконфигурирование при создании образа контейнера или его первом старте,
+то добавить "ручками" репозиторий с именем maven-spring на https://repo.spring.io/milestone и включить его в группу maven-public
