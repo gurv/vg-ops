@@ -35,6 +35,7 @@ GitSCM scm = new GitSCM([userRemoteConfig], null, false, null, null, null, [])
     'vg-ops',
     'vg-core',
     'vg-examples',
+    'vg-doc',
 ].each { jobName ->
     FlowDefinition flowDefinition = (FlowDefinition) new CpsScmFlowDefinition(scm, "jenkins/src/main/jenkins/${jobName}.jenkinsfile")
     Object job = folder.getItem(jobName)
