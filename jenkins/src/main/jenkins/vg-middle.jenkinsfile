@@ -35,5 +35,10 @@ pipeline {
                 sh "echo TODO"
             }
         }
+        stage('Publish CI') {
+            steps {
+                sh "echo TODO"
+            }
+        }
     }
 }

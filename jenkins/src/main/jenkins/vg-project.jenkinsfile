@@ -25,5 +25,10 @@ pipeline {
                 sh "gradle sonarqube -Dsonar.host.url=http://sonarqube:9000"
             }
         }
+        stage('Publish CI') {
+            steps {
+                sh "gradle publish"
+            }
+        }
     }
 }
