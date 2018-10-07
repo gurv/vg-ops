@@ -12,7 +12,6 @@ configure(rootProject) {
         // готовые загружаемые (например, из Docker Hub) docker-образы
         dockerProjects = [
                 project(':docker-cli'),
-                project(':docker-registry'),
                 project(':portainer'),
                 project(':jenkins'),
                 project(':nexus'),

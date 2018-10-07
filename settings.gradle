@@ -9,7 +9,6 @@ pluginManagement {
 rootProject.name = 'vg-ops'
 
 include 'docker-cli'
-include 'docker-registry'
 include 'jenkins'
 include 'portainer'
 include 'nexus'

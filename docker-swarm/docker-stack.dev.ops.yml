@@ -17,10 +17,6 @@ services:
 #    ports:
 #      - 23:22 # ssh
 
-#FIXME
-#  docker-registry:
-#    image: vg/docker-registry:latest
-
   jenkins:
     image: vg/jenkins:latest
     hostname: jenkins
