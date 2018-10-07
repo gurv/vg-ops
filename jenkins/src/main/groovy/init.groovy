@@ -32,15 +32,15 @@ if (folder == null) {
 UserRemoteConfig userRemoteConfig = new UserRemoteConfig("https://github.com/gurv/vg-ops.git", "vg-ops", null, null)
 GitSCM scm = new GitSCM([userRemoteConfig], null, false, null, null, null, [])
 [
-    'vg-project',
-    'vg-middle',
-    'vg-ops',
-    'vg-core',
-    'vg-examples',
-    'vg-doc',
-    'vg-web',
+    'project',
+    'middle',
+    'ops',
+    'core',
+    'examples',
+    'doc',
+    'web',
 ].each { jobName ->
-    FlowDefinition flowDefinition = (FlowDefinition) new CpsScmFlowDefinition(scm, "jenkins/src/main/jenkins/${jobName}.jenkinsfile")
+    FlowDefinition flowDefinition = (FlowDefinition) new CpsScmFlowDefinition(scm, "jenkins/src/main/jenkins/vg-${jobName}.jenkinsfile")
     Object job = folder.getItem(jobName)
     if (job == null) {
         job = folder.createProject(WorkflowJob, jobName)
