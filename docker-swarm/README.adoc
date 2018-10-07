@@ -4,15 +4,20 @@
 ----
 docker swarm init
 docker stack deploy -c docker-stack.dev.db.yml vg
-docker stack deploy -c docker-stack.dev.ops.yml vg
 docker stack deploy -c docker-stack.dev.stream.yml vg
-docker stack deploy -c docker-stack.dev.core.yml vg
 docker stack deploy -c docker-stack.dev.monitoring.yml vg
+docker stack deploy -c docker-stack.dev.ops.yml vg
+docker stack deploy -c docker-stack.dev.core.yml vg
 docker stack rm vg
 docker volume prune --force
 ----
 
 == Памятка
+
+Выполнить после старта/рестарта Docker-а на хосте 
+----
+chmod 777 /run/docker.sock
+----
 
 Консоль контейнера под root
 ----
