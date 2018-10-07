@@ -9,13 +9,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer:/data
 
-#FIXME
-#  docker-cli:
-#    image: vg/docker-cli:latest
-#    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock
-#    ports:
-#      - 23:22 # ssh
+  docker-cli:
+    image: vg/docker-cli:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 23:22 # ssh
 
   jenkins:
     image: vg/jenkins:latest

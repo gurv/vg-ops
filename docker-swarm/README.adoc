@@ -41,3 +41,13 @@ chmod g+rwx,o+rwx /run/docker.sock
 ----
 apk add mc
 ----
+
+Варианты работы с сервисом docker-cli:
+
+* SSH (порт 23)
+* консоль (из UI сервиса portainer)
+
+например:
+----
+/opt/docker service ls
+----

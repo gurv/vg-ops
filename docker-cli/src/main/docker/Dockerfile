@@ -31,7 +31,7 @@ RUN apk --update add curl \
     && apk del curl \
     && rm -rf /var/cache/apk/*
 
-COPY build/docker/docker-entrypoint.sh /usr/local/bin/
+COPY src/main/docker/docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD sh -c 'while sleep 3600; do :; done'
