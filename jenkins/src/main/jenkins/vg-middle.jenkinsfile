@@ -12,12 +12,12 @@ pipeline {
                     submoduleCfg: [],
                     userRemoteConfigs: [[url: 'https://github.com/gurv/vg-middle.git']]
                     ])
-                sh "gradle build --stacktrace"
+                sh "gradle build"
                 }
         }
         stage('Test') {
             steps {
-                sh "gradle check --stacktrace"
+                sh "gradle check"
             }
         }
         stage('Sonar') {
@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Build image') {
             steps {
-                sh "gradle buildImage --stacktrace"
+                sh "gradle buildImage"
             }
         }
         stage('Smoke test') {

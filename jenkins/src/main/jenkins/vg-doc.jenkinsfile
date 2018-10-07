@@ -12,7 +12,7 @@ pipeline {
                     submoduleCfg: [],
                     userRemoteConfigs: [[url: 'https://github.com/gurv/vg-doc.git']]
                     ])
-                sh "gradle build --stacktrace"
+                sh "gradle build"
                 }
         }
         stage('Publish CI') {
