@@ -29,8 +29,11 @@ services:
 
   nexus:
     image: vg/nexus:latest
+    hostname: nexus
     ports:
       - '8086:8081'
+    networks:
+      - sonarqube_net
     volumes:
       - nexus:/nexus-data
 
