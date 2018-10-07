@@ -16,11 +16,28 @@ docker volume prune --force
 
 Консоль контейнера под root
 ----
-docker container ls
+docker container ls | grep jenkins
 docker exec -u 0 -it mycontainer bash
+----
+
+Удаление сервиса
+----
+docker service ls | grep jenkins
+docker service rm myservice
+----
+
+Удаление образа
+----
+docker image | grep jenkins
+docker image rm myimage
 ----
 
 Права контейнерам для работы с Docker-ом хоста
 ----
 chmod g+rwx,o+rwx /run/docker.sock
+----
+
+Установка mc в Alpine-контейнере
+----
+apk add mc
 ----
