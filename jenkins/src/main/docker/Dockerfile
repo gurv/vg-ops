@@ -10,7 +10,8 @@ RUN /usr/local/bin/install-plugins.sh \
     cloudbees-folder:6.6 \
     prometheus:1.2.2 \
     nodejs:1.2.6 \
-    blueocean:1.8.4
+    blueocean:1.8.4 \
+    ansible:1.0
 
 COPY --chown=jenkins:jenkins src/main/groovy/init.groovy /var/jenkins_home/init.groovy.d/
 
@@ -31,6 +32,8 @@ RUN mkdir -p /opt && \
     unzip /tmp/download/gradle-${GRADLE_VERSION}-bin.zip -d /opt/ && \
     # NodeJs
     apk add nodejs-npm==${NODEJS_VERSION}-r0 && \
+    # Ansible
+    apk add ansible=2.5.5-r0 \
     #
     rm -rf /tmp/download && \
     rm -rf /var/cache/apk/*

@@ -21,6 +21,12 @@ def nodeJsInstallationDescriptor = jenkins.getDescriptorByType(jenkins.plugins.n
 nodeJsInstallationDescriptor.setInstallations(nodeJsInstallation)
 nodeJsInstallationDescriptor.save()
 
+// Ansible
+def ansibleInstallation = new org.jenkinsci.plugins.ansible.AnsibleInstallation("ansible-2.5.5", "/usr/bin", null)
+def ansibleInstallationDescriptor = jenkins.getDescriptorByType(org.jenkinsci.plugins.ansible.AnsibleInstallation.DescriptorImpl)
+ansibleInstallationDescriptor.setInstallations(ansibleInstallation)
+ansibleInstallationDescriptor.save()
+
 // Folder
 String folderName = "vg"
 def folder = jenkins.getItem(folderName)
