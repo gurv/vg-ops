@@ -42,4 +42,7 @@ ENV PATH=$PATH:$GRADLE_HOME/bin
 
 USER jenkins
 
+# NodeJs
+RUN npm config set registry http://nexus:8081/repository/npm-group/
+
 EXPOSE 8080
