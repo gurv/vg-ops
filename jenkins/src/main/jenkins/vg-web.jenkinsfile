@@ -15,13 +15,14 @@ pipeline {
                 sh '''
                     npm install
                     npm install @angular/cli
-                    node_modules/.bin/ng build
+                    node_modules/.bin/ng build --output-path=last-build/ --configuration=production
                 '''
                 }
         }
         stage('Test') {
             steps {
-                sh "echo TODO"
+                //TODO https://medium.com/@cnishina/protractor-in-ci-jenkins-6f5fd3fc06ee
+                sh "echo TODO ng e2e"
             }
         }
         stage('Sonar') {
