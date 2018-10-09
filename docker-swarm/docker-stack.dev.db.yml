@@ -3,6 +3,9 @@ version: '3.4'
 services:
   h2:
     image: vg/h2:latest
+    hostname: h2
+    networks:
+      - proxy_net
     volumes:
     - type: bind
       source: /opt/vg/h2-data
