@@ -19,8 +19,9 @@ chmod 777 /run/docker.sock
 
 Консоль контейнера под root
 ----
-docker container ls | grep jenkins
-docker exec -u 0 -it mycontainer bash
+docker run -d vg/grafana
+docker container ls | grep grafana
+docker exec -u 0 -it 8a bash
 ----
 
 Удаление сервиса
