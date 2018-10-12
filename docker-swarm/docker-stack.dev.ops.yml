@@ -23,7 +23,6 @@ services:
       - '8085:8080'
     networks:
       - sonarqube_net
-      - proxy_net
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - jenkins_home:/var/jenkins_home
@@ -35,7 +34,6 @@ services:
       - '8086:8081'
     networks:
       - sonarqube_net
-      - proxy_net
     volumes:
       - nexus:/nexus-data
 
@@ -46,7 +44,6 @@ services:
       - '8087:9000' # http
     networks:
       - sonarqube_net
-      - proxy_net
     environment:
       - SONARQUBE_JDBC_USERNAME=sonar
       - SONARQUBE_JDBC_PASSWORD=sonar

@@ -9,9 +9,6 @@ volumes:
 services:
   grafana:
     image: vg/grafana:latest
-    hostname: grafana
-    networks:
-      - proxy_net
     ports:
       - "3000:3000"
     environment:
@@ -34,9 +31,6 @@ services:
 
   prometheus:
     image: vg/prometheus:latest
-    hostname: prometheus
-    networks:
-    - proxy_net
     ports:
       - "9090:9090"
     volumes:

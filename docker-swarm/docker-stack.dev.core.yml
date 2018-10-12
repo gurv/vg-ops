@@ -71,9 +71,6 @@ services:
 
   swagger:
     image: vg/swagger:latest
-    hostname: swagger
-    networks:
-      - proxy_net
     ports:
       - "8084:8084"
     deploy:
