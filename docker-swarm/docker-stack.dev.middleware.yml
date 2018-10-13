@@ -101,6 +101,58 @@ services:
         reservations:
           memory: 128M
 
+  elasticsearch:
+    image: vg/elasticsearch:latest
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    configs:
+      - source: elastic_config
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  logstash:
+    image: vg/logstash:latest
+    ports:
+      - "5000:5000"
+      - "9600:9600"
+    configs:
+      - source: logstash_config
+        target: /usr/share/logstash/config/logstash.yml
+      - source: logstash_pipeline
+        target: /usr/share/logstash/pipeline/logstash.conf
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  kibana:
+    image: vg/kibana:latest
+    ports:
+      - "5601:5601"
+    configs:
+      - source: kibana_config
+        target: /usr/share/kibana/config/kibana.yml
+    deploy:
+      mode: replicated
+      replicas: 1
+
+configs:
+
+  elastic_config:
+    file: ./config/elasticsearch.yml
+  logstash_config:
+    file: ./config/logstash.yml
+  logstash_pipeline:
+    file: ./config/pipeline/logstash.conf
+  kibana_config:
+    file: ./config/kibana.yml
+
 volumes:
   prometheus: {}
   #  prometheus:
