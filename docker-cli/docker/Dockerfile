@@ -31,7 +31,7 @@ RUN apk --update add curl \
     && apk del curl \
     && rm -rf /var/cache/apk/*
 
-COPY src/main/docker/docker-entrypoint.sh /usr/local/bin/
+COPY docker/docker-entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
     && ln -s /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]

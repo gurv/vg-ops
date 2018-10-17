@@ -1,8 +1,8 @@
 import com.bmuschko.gradle.docker.tasks.image.*
 
 task buildImage(type: DockerBuildImage) {
-    dockerFile file("src/main/docker/Dockerfile")
-    inputDir = file("src/main/docker")
+    dockerFile file("docker/Dockerfile")
+    inputDir = project.projectDir
     buildArgs = [
             'PORTAINER_VERSION': rootProject.portainerVersion
         ]

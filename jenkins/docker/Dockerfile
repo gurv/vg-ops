@@ -13,7 +13,7 @@ RUN /usr/local/bin/install-plugins.sh \
     blueocean:1.8.4 \
     ansible:1.0
 
-COPY --chown=jenkins:jenkins src/main/groovy/init.groovy /var/jenkins_home/init.groovy.d/
+COPY --chown=jenkins:jenkins ini/init.groovy /var/jenkins_home/init.groovy.d/
 
 # Gradle
 ARG GRADLE_VERSION=4.9
@@ -39,7 +39,7 @@ RUN mkdir -p /opt && \
     rm -rf /var/cache/apk/*
 
 # Gradle
-COPY src/main/gradle/init.gradle /opt/gradle-${GRADLE_VERSION}/init.d/
+COPY gradle/init.gradle /opt/gradle-${GRADLE_VERSION}/init.d/
 ENV GRADLE_HOME=$GRADLE_HOME
 ENV PATH=$PATH:$GRADLE_HOME/bin
 

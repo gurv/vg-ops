@@ -46,7 +46,7 @@ GitSCM scm = new GitSCM([userRemoteConfig], null, false, null, null, null, [])
     'doc',
     'web',
 ].each { jobName ->
-    FlowDefinition flowDefinition = (FlowDefinition) new CpsScmFlowDefinition(scm, "jenkins/src/main/jenkins/vg-${jobName}.jenkinsfile")
+    FlowDefinition flowDefinition = (FlowDefinition) new CpsScmFlowDefinition(scm, "jenkins/job/vg-${jobName}.jenkinsfile")
     Object job = folder.getItem(jobName)
     if (job == null) {
         job = folder.createProject(WorkflowJob, jobName)
