@@ -9,7 +9,6 @@ configure(rootProject) {
         dockerVersion = '18.03.1-ce'
         portainerVersion = '1.18.1'
 
-        // готовые загружаемые (например, из Docker Hub) docker-образы
         dockerProjects = [
                 project(':docker-cli'),
                 project(':portainer'),
