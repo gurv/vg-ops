@@ -16,11 +16,8 @@ RUN /usr/local/bin/install-plugins.sh \
 COPY --chown=jenkins:jenkins ini/init.groovy /var/jenkins_home/init.groovy.d/
 
 # Gradle
-ARG GRADLE_VERSION=4.9
+ARG GRADLE_VERSION=5.3
 ARG GRADLE_HOME=/opt/gradle-$GRADLE_VERSION
-# NodeJs
-ARG NODEJS_VERSION=8.11.4
-ARG NODE_HOME=/opt/node-v${NODEJS_VERSION}-linux-x86
 
 USER root
 
@@ -28,10 +25,10 @@ RUN mkdir -p /opt && \
     apk --update add --no-cache unzip && \
     mkdir -p /tmp/download && \
     # Gradle
-    curl -L -o /tmp/download/gradle-${GRADLE_VERSION}-bin.zip https://services.gradle.org/distributions/gradle-4.9-bin.zip && \
+    curl -L -o /tmp/download/gradle-${GRADLE_VERSION}-bin.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
     unzip /tmp/download/gradle-${GRADLE_VERSION}-bin.zip -d /opt/ && \
     # NodeJs
-    apk add nodejs-npm==${NODEJS_VERSION}-r0 && \
+    apk add nodejs-npm && \
     # Ansible
     apk add ansible=2.5.5-r0 \
     #

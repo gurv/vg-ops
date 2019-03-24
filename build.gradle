@@ -1,22 +1,15 @@
 plugins {
-    id 'com.bmuschko.docker-remote-api' version '3.4.4' apply false
+    id "com.bmuschko.docker-remote-api" version "4.6.2" apply false
     id 'com.gorylenko.gradle-git-properties' version '1.5.1' apply false
     id "org.sonarqube" version "2.6.2" apply false
 }
 
-configure(rootProject) {
-    ext {
-        dockerVersion = '18.03.1-ce'
-        portainerVersion = '1.18.1'
+group = 'io.github.gurv'
+version = '0.1.0-SNAPSHOT'
 
-        dockerProjects = [
-                project(':docker-cli'),
-                project(':portainer'),
-                project(':jenkins'),
-                project(':nexus'),
-                project(':sonarqube'),
-        ]
-    }
+ext {
+    dockerVersion = '18.03.1-ce'
+    portainerVersion = '1.18.1'
 }
 
 configure(subprojects) {
@@ -25,35 +18,14 @@ configure(subprojects) {
     apply plugin: 'org.sonarqube'
 
     ext {
-        buildNoString = project.hasProperty('buildNo') ? "${buildNo}" : "0.1.0"
+        imageName = "gurv/${rootProject.name}-${project.name}:latest"
     }
-
-    group = 'ru.gurv.vg'
-    version = buildNoString
-}
-
-configure(subprojects.findAll {it.subprojects.size() == 0 }) {
-
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-
-    ext {
-        dockerImageName = "gurv/${rootProject.name}-${project.path.substring(1).replace(':', '-')}:latest"
-        dockerContainerName = "${rootProject.name}-${project.path.substring(1).replace(':', '-')}"
-        dockerImageBuildArgs = []
-    }
-
-    apply plugin: 'com.bmuschko.docker-remote-api'
 
     docker {
-        url = System.env.DOCKER_HOST ?: findProperty('dockerHostUrl') ?: url
-        certPath = System.env.DOCKER_CERT_PATH ? new File(System.env.DOCKER_CERT_PATH) : certPath
-        apiVersion = System.env.DOCKER_API_VERSION ?: apiVersion
+        registryCredentials {
+            username = System.getenv('DOCKER_USERNAME')
+            password = System.getenv('DOCKER_PASSWORD')
+            email = 'vladimir.gurinovich@gmail.com'
+        }
     }
-}
-
-configure(project.dockerProjects) {
-    apply plugin: 'base'
 }
