@@ -3,10 +3,13 @@ install: true
 jdk: oraclejdk8
 script: ./gradlew build pushImage
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-  - rm -fr $HOME/.gradle/caches/*/scripts/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -fr $HOME/.gradle/caches/*/scripts/
 cache:
   directories:
-    - "$HOME/.gradle/caches/"
-    - "$HOME/.gradle/wrapper/"
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+notifications:
+  slack:
+    secure: VqenAJH6f9GEp3J0spcyAt2xFwfRBjiUqWw47jRU8ZcXTwDrrldgzpImol4DRg5H4l/0LGY2HsfNpbmoVeH1BHwzBbFmz8bRR0L+Mb5Ybhhph7KNJNJB7T5z2FFXK3WizJWulecy9cHKam1o0FqIF1xJgHcBm4Y7wgGRiH3FoSsczKq65IOs/L1kfSclXATCIxuKUumaUqhtfBNyvXxqZqUhuOfwRcEKZOjSdDGJtNyKmrxhvxiifw/vmHojNpAJLwgHcAf/iWKgJYOSIIfmPca3tzcsFV/V7yz07dPEI61/r2wLaBYZpoAbMGBIAcy2oUY48K2RWIRNmAXyF6YKqcgIoV5IPqRroRfdXzR/uioYcjydVTba4+8VpKbTNmxJ4vHm8Wwo4R5Pj21pbCVyyYkANLd9fG0CSs5zsNhB1OTgCJsZF1yDBFD+H2rBUBnht9O7XeAb2DMrBh2gydiNrxMaD1m3qH8DOrFloWDP/a0nVZSSsQqY/SO3q761OM7gPRbYGspZtaNTkly9RCiodthFuMcXyieY8DyVp4C2DDB5YjEdKt21kyzi+vWyRo2PpAFNVV5m/SriSQnoMZrJUfDRWT0PgV/xDWQ92fc6DSrDZtb/Yc/dv+YiMhdfHgyO2xYzNFO4XOcIBbB80IOhGQ7r7/ucUjrITBa8ecco088=
