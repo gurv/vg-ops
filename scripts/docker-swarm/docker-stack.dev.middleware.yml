@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   h2:
-    image: vg/h2:latest
+    image: gurv/vg-middle-h2:latest
     volumes:
     - type: bind
       source: /opt/vg/h2-data
@@ -13,7 +13,7 @@ services:
     - 1235:1235 # JMX Exporter
 
   zookeeper:
-    image: vg/zookeeper:latest
+    image: gurv/vg-middle-zookeeper:latest
     hostname: zookeeper
     ports:
     - 2181:2181 # clientPort
@@ -29,7 +29,7 @@ services:
     - "moby:127.0.0.1"
 
   kafka:
-    image: vg/kafka:latest
+    image: gurv/vg-middle-kafka:latest
     hostname: kafka
     ports:
     - 9092 #TODO назначение
@@ -46,7 +46,7 @@ services:
     - "moby:127.0.0.1"
 
   kafka-schema-registry:
-    image: vg/kafka-schema-registry:latest
+    image: gurv/vg-middle-kafka-schema-registry:latest
     hostname: kafka_schema_registry
     ports:
     - '18081:18081'
@@ -61,7 +61,7 @@ services:
     - "moby:127.0.0.1"
 
   grafana:
-    image: vg/grafana:latest
+    image: gurv/vg-middle-grafana:latest
     ports:
     - "3000:3000"
     environment:
@@ -83,7 +83,7 @@ services:
           memory: 64M
 
   prometheus:
-    image: vg/prometheus:latest
+    image: gurv/vg-middle-prometheus:latest
     ports:
     - "9090:9090"
     volumes:
@@ -102,7 +102,7 @@ services:
           memory: 128M
 
   elasticsearch:
-    image: vg/elasticsearch:latest
+    image: gurv/vg-middle-elasticsearch:latest
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -116,7 +116,7 @@ services:
       replicas: 1
 
   logstash:
-    image: vg/logstash:latest
+    image: gurv/vg-middle-logstash:latest
     ports:
       - "5000:5000"
       - "9600:9600"
@@ -132,7 +132,7 @@ services:
       replicas: 1
 
   kibana:
-    image: vg/kibana:latest
+    image: gurv/vg-middle-kibana:latest
     ports:
       - "5601:5601"
     configs:

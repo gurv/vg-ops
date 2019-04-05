@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   portainer:
-    image: vg/portainer:latest
+    image: gurv/vg-ops-portainer:latest
     ports:
       - 9000:9000 # tcp
     volumes:
@@ -10,14 +10,14 @@ services:
       - portainer:/data
 
   docker-cli:
-    image: vg/docker-cli:latest
+    image: gurv/vg-ops-docker-cli:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 23:22 # ssh
 
   jenkins:
-    image: vg/jenkins:latest
+    image: gurv/vg-ops-jenkins:latest
     hostname: jenkins
     ports:
       - '8085:8080'
@@ -28,7 +28,7 @@ services:
       - jenkins_home:/var/jenkins_home
 
   nexus:
-    image: vg/nexus:latest
+    image: gurv/vg-ops-nexus:latest
     hostname: nexus
     ports:
       - '8086:8081'
@@ -38,7 +38,7 @@ services:
       - nexus:/nexus-data
 
   sonarqube:
-    image: vg/sonarqube:latest
+    image: gurv/vg-ops-sonarqube:latest
     hostname: sonarqube
     ports:
       - '8087:9000' # http
@@ -55,7 +55,7 @@ services:
       - sonarqube_bundled_plugins:/opt/sonarqube/lib/bundled-plugins
 
   sonarqube_db:
-    image: vg/postgres:latest
+    image: gurv/vg-ops-postgres:latest
     hostname: sonarqube_db
     networks:
       - sonarqube_net
