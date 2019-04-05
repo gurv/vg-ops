@@ -1,1 +1,9 @@
-= Ops
+= Ops Services
+
+== Docker
+
+```
+./gradlew buildImage
+# (vg-jenkins)
+docker run -d gurv/vg-ops-jenkins
+```
