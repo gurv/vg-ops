@@ -7,3 +7,7 @@
 # (vg-jenkins)
 docker run -d gurv/vg-ops-jenkins
 ```
+
+== Documentation
+
+https://gurv.github.io/vg-doc/index.html
