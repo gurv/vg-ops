@@ -18,7 +18,7 @@ configure(subprojects) {
     apply plugin: 'org.sonarqube'
 
     ext {
-        imageName = "gurv/${rootProject.name}-${project.name}:latest"
+        imageName = "gurv/${project.name}:latest"
     }
 
     docker {
