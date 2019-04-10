@@ -1,5 +1,7 @@
 = Ops Services
 
+image:https://img.shields.io/travis/gurv/vg-ops/master.svg[Build Status (Travis CI),link=https://travis-ci.org/gurv/vg-ops]
+
 == Docker
 
 ```
