@@ -28,4 +28,16 @@ configure(subprojects) {
             email = 'vladimir.gurinovich@gmail.com'
         }
     }
+
+    sonarqube {
+        properties {
+            property "sonar.host.url", "https://sonarcloud.io"
+            property "sonar.organization", "gurv-github"
+            property "sonar.projectVersion", "${project.version}"
+            property "sonar.sources", "."
+            property "sonar.links.ci", "https://travis-ci.org/gurv/vg-ops"
+            property "sonar.links.scm", "https://github.com/gurv/vg-ops"
+            property "sonar.links.issue", "https://github.com/gurv/vg-ops/issues"
+        }
+    }
 }
