@@ -1,3 +1,5 @@
 = Docker CLI
 
+image:https://sonarcloud.io/api/project_badges/measure?project=io.github.gurv:vg-ops:docker-cli&metric=alert_status[Sonarcloud Status,link=https://sonarcloud.io/dashboard?id=io.github.gurv%3Avg-ops%3Adocker-cli]
+
 Сборка docker-образа c Docker CLI
