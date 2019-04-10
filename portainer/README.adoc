@@ -1,5 +1,3 @@
 = Portainer
 
-image:https://sonarcloud.io/api/project_badges/measure?project=io.github.gurv:vg-ops:portainer&metric=alert_status[Sonarcloud Status,link=https://sonarcloud.io/dashboard?id=io.github.gurv%3Avg-ops%3Aportainer]
-
 Сборка docker-образа https://github.com/portainer/portainer[Portainer] (UI для Docker-а)

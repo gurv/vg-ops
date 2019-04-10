@@ -1,7 +1,5 @@
 = Jenkins
 
-image:https://sonarcloud.io/api/project_badges/measure?project=io.github.gurv:vg-ops:jenkins&metric=alert_status[Sonarcloud Status,link=https://sonarcloud.io/dashboard?id=io.github.gurv%3Avg-ops%3Ajenkins]
-
 Сборка docker-образа https://hub.docker.com/r/jenkins/jenkins/[Jenkins]
 
 Получение начального пароля администратора

@@ -7,15 +7,28 @@ plugins {
 group = 'io.github.gurv'
 version = '0.1.0-SNAPSHOT'
 
+apply plugin: 'org.sonarqube'
+
 ext {
     dockerVersion = '18.03.1-ce'
     portainerVersion = '1.18.1'
 }
 
+sonarqube {
+    properties {
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.organization", "gurv-github"
+        property "sonar.projectVersion", "${project.version}"
+        property "sonar.sources", "."
+        property "sonar.links.ci", "https://travis-ci.org/gurv/vg-ops"
+        property "sonar.links.scm", "https://github.com/gurv/vg-ops"
+        property "sonar.links.issue", "https://github.com/gurv/vg-ops/issues"
+    }
+}
+
 configure(subprojects) {
     apply plugin: 'base'
     apply plugin: 'com.bmuschko.docker-remote-api'
-    apply plugin: 'org.sonarqube'
 
     ext {
         imageName = "gurv/${project.name}:latest"
@@ -26,18 +39,6 @@ configure(subprojects) {
             username = System.getenv('DOCKER_USERNAME')
             password = System.getenv('DOCKER_PASSWORD')
             email = 'vladimir.gurinovich@gmail.com'
-        }
-    }
-
-    sonarqube {
-        properties {
-            property "sonar.host.url", "https://sonarcloud.io"
-            property "sonar.organization", "gurv-github"
-            property "sonar.projectVersion", "${project.version}"
-            property "sonar.sources", "."
-            property "sonar.links.ci", "https://travis-ci.org/gurv/vg-ops"
-            property "sonar.links.scm", "https://github.com/gurv/vg-ops"
-            property "sonar.links.issue", "https://github.com/gurv/vg-ops/issues"
         }
     }
 }
