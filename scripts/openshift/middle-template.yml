@@ -1,0 +1,66 @@
+kind: "Template"
+apiVersion: "v1"
+metadata:
+  name: "middle"
+  openshift.io/display-name: "middle"
+  tags: "middle"
+parameters:
+- description: По умолчанию - 'vg'.
+  name: NAMESPACE
+  value: vg
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: grafana
+  spec:
+    ports:
+    - port: 3000
+      targetPort: 3000
+    selector:
+      deploymentconfig: grafana
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: grafana
+  spec:
+    to:
+      kind: Service
+      name: grafana
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: grafana
+  spec:
+    dockerImageRepository: docker.io/gurv/grafana
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: grafana
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: grafana
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          deploymentconfig: grafana
+      spec:
+        containers:
+        - image: gurv/grafana:latest
+          name: grafana
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - grafana
+        from:
+          kind: ImageStreamTag
+          name: grafana:latest
+      type: ImageChange
