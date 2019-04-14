@@ -1,0 +1,66 @@
+kind: "Template"
+apiVersion: "v1"
+metadata:
+  name: "web"
+  openshift.io/display-name: "web"
+  tags: "vg"
+parameters:
+- description: По умолчанию - 'vg'.
+  name: NAMESPACE
+  value: vg
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: web
+  spec:
+    ports:
+    - port: 8080
+      targetPort: 8080
+    selector:
+      deploymentconfig: web
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: web
+  spec:
+    to:
+      kind: Service
+      name: web
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: web
+  spec:
+    dockerImageRepository: docker.io/gurv/web
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: web
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: web
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          deploymentconfig: web
+      spec:
+        containers:
+        - image: gurv/web:latest
+          name: web
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - web
+        from:
+          kind: ImageStreamTag
+          name: web:latest
+      type: ImageChange

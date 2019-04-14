@@ -1,0 +1,475 @@
+kind: "Template"
+apiVersion: "v1"
+metadata:
+  name: "vg-core"
+  openshift.io/display-name: "vg-core"
+  tags: "vg"
+parameters:
+- description: По умолчанию - 'vg'.
+  name: NAMESPACE
+  value: vg
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: config
+  spec:
+    ports:
+    - port: 8888
+      targetPort: 8888
+    selector:
+      deploymentconfig: config
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: config
+  spec:
+    to:
+      kind: Service
+      name: config
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: config
+  spec:
+    dockerImageRepository: docker.io/gurv/config
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: config
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: config
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          deploymentconfig: config
+      spec:
+        containers:
+        - image: gurv/config:latest
+          name: config
+          env:
+          - name: JAVA_OPTS
+            value: -XX:MaxRAM=128m
+          ports:
+          - containerPort: 8888
+            protocol: TCP
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - config
+        from:
+          kind: ImageStreamTag
+          name: config:latest
+      type: ImageChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: auth
+  spec:
+    ports:
+    - port: 5000
+      targetPort: 8080
+    selector:
+      deploymentconfig: auth
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: auth
+  spec:
+    to:
+      kind: Service
+      name: auth
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: auth
+  spec:
+    dockerImageRepository: docker.io/gurv/auth
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: auth
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: auth
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          deploymentconfig: auth
+      spec:
+        containers:
+        - image: gurv/auth:latest
+          name: auth
+          env:
+          - name: JAVA_OPTS
+            value: -XX:MaxRAM=128m
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - auth
+        from:
+          kind: ImageStreamTag
+          name: auth:latest
+      type: ImageChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: metadata
+  spec:
+    ports:
+    - port: 8082
+      targetPort: 8082
+    selector:
+      deploymentconfig: metadata
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: metadata
+  spec:
+    to:
+      kind: Service
+      name: metadata
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: metadata
+  spec:
+    dockerImageRepository: docker.io/gurv/metadata
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: metadata
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: metadata
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          deploymentconfig: metadata
+      spec:
+        containers:
+        - image: gurv/metadata:latest
+          name: metadata
+          env:
+          - name: JAVA_OPTS
+            value: -XX:MaxRAM=128m
+          ports:
+          - containerPort: 8082
+            protocol: TCP
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - metadata
+        from:
+          kind: ImageStreamTag
+          name: metadata:latest
+      type: ImageChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: account
+  spec:
+    ports:
+    - port: 8081
+      targetPort: 8081
+    selector:
+      deploymentconfig: account
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: account
+  spec:
+    to:
+      kind: Service
+      name: account
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: account
+  spec:
+    dockerImageRepository: docker.io/gurv/account
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: account
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: account
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          deploymentconfig: account
+      spec:
+        containers:
+        - image: gurv/account:latest
+          name: account
+          env:
+          - name: JAVA_OPTS
+            value: -XX:MaxRAM=128m
+          ports:
+          - containerPort: 8081
+            protocol: TCP
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - account
+        from:
+          kind: ImageStreamTag
+          name: account:latest
+      type: ImageChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: swagger
+  spec:
+    ports:
+    - port: 8084
+      targetPort: 8084
+    selector:
+      deploymentconfig: swagger
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: swagger
+  spec:
+    to:
+      kind: Service
+      name: swagger
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: swagger
+  spec:
+    dockerImageRepository: docker.io/gurv/swagger
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: swagger
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: swagger
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          deploymentconfig: swagger
+      spec:
+        containers:
+        - image: gurv/swagger:latest
+          name: swagger
+          env:
+          - name: JAVA_OPTS
+            value: -XX:MaxRAM=128m
+          ports:
+          - containerPort: 8084
+            protocol: TCP
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - swagger
+        from:
+          kind: ImageStreamTag
+          name: swagger:latest
+      type: ImageChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dataflow
+  spec:
+    ports:
+    - port: 9393
+      targetPort: 9393
+    selector:
+      deploymentconfig: dataflow
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: dataflow
+  spec:
+    to:
+      kind: Service
+      name: swagger
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: dataflow
+  spec:
+    dockerImageRepository: docker.io/gurv/dataflow
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: dataflow
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: dataflow
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          deploymentconfig: dataflow
+      spec:
+        containers:
+        - image: gurv/dataflow:latest
+          name: dataflow
+          env:
+          - name: JAVA_OPTS
+            value: -XX:MaxRAM=128m
+          ports:
+          - containerPort: 9393
+            protocol: TCP
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - dataflow
+        from:
+          kind: ImageStreamTag
+          name: dataflow:latest
+      type: ImageChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: gateway
+  spec:
+    ports:
+    - port: 5000
+      targetPort: 8080
+    selector:
+      deploymentconfig: gateway
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: gateway
+  spec:
+    to:
+      kind: Service
+      name: gateway
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: gateway
+  spec:
+    dockerImageRepository: docker.io/gurv/gateway
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: gateway
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: gateway
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          deploymentconfig: gateway
+      spec:
+        containers:
+        - image: gurv/gateway:latest
+          name: gateway
+          env:
+          - name: JAVA_OPTS
+            value: -XX:MaxRAM=128m
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - gateway
+        from:
+          kind: ImageStreamTag
+          name: gateway:latest
+      type: ImageChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: skipper
+  spec:
+    ports:
+    - port: 50001
+      targetPort: 7577
+    selector:
+      deploymentconfig: skipper
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: skipper
+  spec:
+    to:
+      kind: Service
+      name: skipper
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: skipper
+  spec:
+    dockerImageRepository: docker.io/gurv/skipper
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: skipper
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: skipper
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          deploymentconfig: skipper
+      spec:
+        containers:
+        - image: gurv/skipper:latest
+          name: skipper
+          env:
+          - name: JAVA_OPTS
+            value: -XX:MaxRAM=128m
+          ports:
+          - containerPort: 7577
+            protocol: TCP
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - skipper
+        from:
+          kind: ImageStreamTag
+          name: skipper:latest
+      type: ImageChange
