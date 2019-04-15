@@ -3,14 +3,10 @@
 image:https://img.shields.io/travis/gurv/vg-ops/master.svg[Build Status (Travis CI),link=https://travis-ci.org/gurv/vg-ops]
 image:https://sonarcloud.io/api/project_badges/measure?project=io.github.gurv:vg-ops&metric=alert_status[Sonarcloud Status,link=https://sonarcloud.io/dashboard?id=io.github.gurv%3Avg-ops]
 
-== Docker
+Documentation: https://gurv.github.io/vg-doc/index.html
 
 ```
+# Docker
 ./gradlew buildImage
-# (vg-jenkins)
-docker run -d gurv/vg-ops-jenkins
+docker run -d --name=jenkins gurv/jenkins
 ```
-
-== Documentation
-
-https://gurv.github.io/vg-doc/index.html

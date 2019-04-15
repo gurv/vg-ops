@@ -1,57 +1,11 @@
 = Docker Swarm
 
-Запуск/останов/уборка
-----
+```
+# Запуск / останов / уборка
 docker swarm init
 docker stack deploy -c docker-stack.dev.middleware.yml vg
 docker stack deploy -c docker-stack.dev.ops.yml vg
 docker stack deploy -c docker-stack.dev.core.yml vg
 docker stack rm vg
 docker volume prune --force
-----
-
-== Памятка
-
-Выполнить после старта/рестарта Docker-а на хосте 
-----
-chmod 777 /run/docker.sock
-----
-
-Консоль контейнера под root
-----
-docker run -d vg/grafana
-docker container ls | grep grafana
-docker exec -u 0 -it 8a bash
-----
-
-Удаление сервиса
-----
-docker service ls | grep jenkins
-docker service rm myservice
-----
-
-Удаление образа
-----
-docker image | grep jenkins
-docker image rm myimage
-----
-
-Права контейнерам для работы с Docker-ом хоста
-----
-chmod g+rwx,o+rwx /run/docker.sock
-----
-
-Установка mc в Alpine-контейнере
-----
-apk add mc
-----
-
-Варианты работы с сервисом docker-cli:
-
-* SSH (порт 23)
-* консоль (из UI сервиса portainer)
-
-например:
-----
-/opt/docker service ls
-----
+```

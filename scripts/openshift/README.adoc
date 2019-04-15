@@ -1,0 +1,11 @@
+= OpenShift
+
+```
+oc new-project vg
+#
+oc process -f scripts/openshift/middle-template.yml | oc create -f -
+oc process -f scripts/openshift/web-template.yml | oc create -f -
+oc process -f scripts/openshift/core-template.yml | oc create -f -
+#
+oc delete all --all
+```
