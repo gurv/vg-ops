@@ -11,7 +11,7 @@ apply plugin: 'org.sonarqube'
 
 ext {
     dockerVersion = '18.03.1-ce'
-    portainerVersion = '1.18.1'
+    portainerVersion = '1.22.0'
 }
 
 sonarqube {
