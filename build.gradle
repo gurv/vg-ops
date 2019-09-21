@@ -1,17 +1,17 @@
 plugins {
     id "com.bmuschko.docker-remote-api" version "4.6.2" apply false
     id 'com.gorylenko.gradle-git-properties' version '1.5.1' apply false
-    id "org.sonarqube" version "2.6.2" apply false
+    id "org.sonarqube" version "2.7.1" apply false
 }
 
 group = 'io.github.gurv'
-version = '0.1.0-SNAPSHOT'
+version = '0.2.0-SNAPSHOT'
 
 apply plugin: 'org.sonarqube'
 
 ext {
     dockerVersion = '18.03.1-ce'
-    portainerVersion = '1.22.0'
+    portainerVersion = '1.18.1'
 }
 
 sonarqube {
