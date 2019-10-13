@@ -1,3 +1,5 @@
+import com.bmuschko.gradle.docker.tasks.image.*
+
 plugins {
     id "com.bmuschko.docker-remote-api" version "4.6.2" apply false
     id 'com.gorylenko.gradle-git-properties' version '1.5.1' apply false
@@ -26,19 +28,59 @@ sonarqube {
     }
 }
 
-configure(subprojects) {
+subprojects {
     apply plugin: 'base'
     apply plugin: 'com.bmuschko.docker-remote-api'
 
     ext {
-        imageName = "gurv/${project.name}:latest"
+        imageName = "vg-${project.name}"
     }
 
     docker {
         registryCredentials {
-            username = System.getenv('DOCKER_USERNAME')
-            password = System.getenv('DOCKER_PASSWORD')
             email = 'vladimir.gurinovich@gmail.com'
+        }
+    }
+
+    task buildImage(type: DockerBuildImage) {
+        dockerFile = file('docker/Dockerfile')
+        inputDir = project.projectDir
+        tags.add("latest")
+    }
+
+    task tagImageDockerHub(type: DockerTagImage) {
+        dependsOn buildImage
+        imageId = project.imageName
+        repository = "${project.dockerhubRegistry}/${project.imageName}"
+        tag = 'latest'
+    }
+    
+    task pushImageToDockerHub(type: DockerPushImage) {
+        dependsOn tagImageDockerHub
+        imageName = "${project.dockerhubRegistry}/${project.imageName}"
+        tag = 'latest'
+        doFirst {
+            registryCredentials.url = project.dockerhubRegistry
+            registryCredentials.username = findProperty('dockerhubUsername') ?: System.getenv('CI_DOCKER_USERNAME')
+            registryCredentials.password = findProperty('dockerhubPassword') ?: System.getenv('CI_DOCKER_PASSWORD')
+        }
+    }
+
+    task tagImageGitHub(type: DockerTagImage) {
+        dependsOn buildImage
+        imageId = project.imageName
+        repository = "${project.githubRegistry}/${project.imageName}"
+        tag = 'latest'
+    }
+
+    task pushImageToGitHub(type: DockerPushImage) {
+        dependsOn tagImageGitHub
+        imageName = "${project.githubRegistry}/${project.imageName}"
+        tag = 'latest'
+        doFirst {
+            registryCredentials.url = project.githubRegistry
+            registryCredentials.username = findProperty('githubUsername') ?: System.getenv('GITHUB_USERNAME')
+            registryCredentials.password = findProperty('githubToken') ?: System.getenv('GITHUB_TOKEN')
         }
     }
 }

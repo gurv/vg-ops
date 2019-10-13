@@ -1,15 +1,5 @@
-import com.bmuschko.gradle.docker.tasks.image.*
-
-task buildImage(type: DockerBuildImage) {
-    dockerFile = file("docker/Dockerfile")
-    inputDir = project.projectDir
+buildImage.doFirst {
     buildArgs = [
             'PORTAINER_VERSION': rootProject.portainerVersion
-        ]
-    tags.add(project.imageName)
-}
-
-task pushImage(type: DockerPushImage) {
-    dependsOn buildImage
-    imageName = project.imageName
+    ]
 }
