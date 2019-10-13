@@ -45,7 +45,7 @@ subprojects {
     task buildImage(type: DockerBuildImage) {
         dockerFile = file('docker/Dockerfile')
         inputDir = project.projectDir
-        tags.add("latest")
+        tags.add(project.imageName)
     }
 
     task tagImageDockerHub(type: DockerTagImage) {
