@@ -65,11 +65,11 @@ subprojects {
         dependsOn tagImageDockerHub
         imageName = "${rootProject.dockerhubRegistry}/${project.imageName}"
         tag = project.imageVersion
-        doFirst {
-            registryCredentials.url = rootProject.dockerhubRegistry
-            registryCredentials.username = findProperty('dockerhubUsername') ?: System.getenv('CI_DOCKER_USERNAME')
-            registryCredentials.password = findProperty('dockerhubPassword') ?: System.getenv('CI_DOCKER_PASSWORD')
-        }
+        def credentials = new DockerRegistryCredentials(project.objects)
+        credentials.url.set rootProject.dockerhubRegistry
+        credentials.username.set findProperty('dockerhubUsername') ?: System.getenv('CI_DOCKER_USERNAME')
+        credentials.password.set findProperty('dockerhubPassword') ?: System.getenv('CI_DOCKER_PASSWORD')
+        registryCredentials = credentials
     }
 
     task tagImageGitHub(type: DockerTagImage) {
@@ -83,10 +83,10 @@ subprojects {
         dependsOn tagImageGitHub
         imageName = "${rootProject.githubRegistry}/${project.imageName}"
         tag = project.imageVersion
-        doFirst {
-            registryCredentials.url = rootProject.githubRegistry
-            registryCredentials.username = findProperty('githubUsername') ?: System.getenv('GITHUB_USERNAME')
-            registryCredentials.password = findProperty('githubToken') ?: System.getenv('GITHUB_TOKEN')
-        }
+        def credentials = new DockerRegistryCredentials(project.objects)
+        credentials.url.set rootProject.githubRegistry
+        credentials.username.set findProperty('githubUsername') ?: System.getenv('GITHUB_USERNAME')
+        credentials.password.set findProperty('githubToken') ?: System.getenv('GITHUB_TOKEN')
+        registryCredentials = credentials
     }
 }
