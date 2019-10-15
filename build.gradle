@@ -1,4 +1,7 @@
-import com.bmuschko.gradle.docker.tasks.image.*
+import com.bmuschko.gradle.docker.DockerRegistryCredentials
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+import com.bmuschko.gradle.docker.tasks.image.DockerTagImage
 
 plugins {
     id 'com.bmuschko.docker-remote-api' version '5.2.0' apply false
