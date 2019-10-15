@@ -44,7 +44,7 @@ subprojects {
 
     docker {
         registryCredentials {
-            email = 'vladimir.gurinovich@gmail.com'
+            email = rootProject.email
         }
     }
 
