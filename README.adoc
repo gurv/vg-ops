@@ -1,12 +1,10 @@
 = Ops Services
 
-image:https://img.shields.io/travis/gurv/vg-ops/master.svg[Build Status (Travis CI),link=https://travis-ci.org/gurv/vg-ops]
+image:https://github.com/gurv/vg-core/workflows/CI/badge.svg[build]
 image:https://sonarcloud.io/api/project_badges/measure?project=io.github.gurv:vg-ops&metric=alert_status[Sonarcloud Status,link=https://sonarcloud.io/dashboard?id=io.github.gurv%3Avg-ops]
 image:https://img.shields.io/github/contributors/gurv/vg-ops.svg[Contributors,link=https://github.com/gurv/vg-ops/graphs/contributors]
 image:https://img.shields.io/github/commit-activity/m/gurv/vg-ops.svg[Activity,link=https://github.com/gurv/vg-ops/pulse]
 image:https://img.shields.io/github/repo-size/gurv/vg-ops.svg[repo size]
-image:https://dev.azure.com/gurv/vg/_apis/build/status/vg-ops?branchName=master[Build Status]
-image:https://github.com/gurv/vg-ops/workflows/ci/badge.svg[GitHub CI]
 
 * https://gurv.github.io/vg-doc/index.html[Documentation]
 

@@ -21,7 +21,7 @@ ext {
     email = 'vladimir.gurinovich@gmail.com'
     
     dockerhubRegistry = 'docker.io/gurv'
-    githubRegistry = 'docker.pkg.github.com/gurv/vg-ops'
+    githubRegistry = 'ghcr.io/gurv'
 }
 
 sonarqube {
@@ -70,8 +70,8 @@ subprojects {
         tag = project.imageVersion
         def credentials = new DockerRegistryCredentials(project.objects)
         credentials.url.set rootProject.dockerhubRegistry
-        credentials.username.set findProperty('dockerhubUsername') ?: System.getenv('CI_DOCKER_USERNAME')
-        credentials.password.set findProperty('dockerhubPassword') ?: System.getenv('CI_DOCKER_PASSWORD')
+        credentials.username.set findProperty('dockerhubUsername') ?: System.getenv('DOCKERHUB_USERNAME')
+        credentials.password.set findProperty('dockerhubPassword') ?: System.getenv('DOCKERHUB_TOKEN')
         registryCredentials = credentials
     }
 
@@ -89,7 +89,11 @@ subprojects {
         def credentials = new DockerRegistryCredentials(project.objects)
         credentials.url.set rootProject.githubRegistry
         credentials.username.set findProperty('githubUsername') ?: System.getenv('GITHUB_USERNAME')
-        credentials.password.set findProperty('githubToken') ?: System.getenv('GITHUB_TOKEN')
+        credentials.password.set findProperty('githubToken') ?: System.getenv('CONTAINER_REGISTRY_PAT')
         registryCredentials = credentials
+    }
+
+    task publish() {
+        dependsOn pushImageToGitHub, pushImageToDockerHub
     }
 }

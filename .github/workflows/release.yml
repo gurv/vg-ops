@@ -1,11 +1,5 @@
-name: CI
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+name: Release
+on: workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,13 +10,16 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Build
-      run: ./gradlew build
-    - name: Sonar
-      run: ./gradlew sonar
+    - name: Publish
+      run: ./gradlew publish
       env:
+        SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+        SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+        GITHUB_USERNAME: gurv
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        CONTAINER_REGISTRY_PAT: ${{ secrets.CONTAINER_REGISTRY_PAT }}
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Slack
       if: always()
       uses: 8398a7/action-slack@v3
